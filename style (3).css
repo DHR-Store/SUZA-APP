@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #1f1f1f;
+    padding: 15px;
+}
+
+.logo {
+    height: 50px;
+}
+
+#searchBox {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.video-container {
+    margin-top: 20px;
+}
+
+iframe {
+    width: 80%;
+    height: 450px;
+    border-radius: 10px;
+}
+
+.controls {
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #ff5733;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e64a19;
+}
+
+.download-section {
+    margin-top: 20px;
+}
+
+#downloadLink {
+    color: cyan;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+footer {
+    margin-top: 30px;
+    padding: 10px;
+    background: #1f1f1f;
+}
+              
+
+              
+          /* Custom Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+                /* Navbar */
+        nav.navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #444;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+
+        .nav-link {
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease-in-out;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .nav-link i {
+            font-size: 26px;
+        }
+
+        .nav-link:hover {
+            color: cyan;
+            transform: scale(1.1);
+        }
+        
