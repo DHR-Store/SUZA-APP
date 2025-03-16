@@ -1,11 +1,11 @@
-const API_KEY = "245f8617"; // अपनी OMDb API Key डालें
+const API_KEY = "245f8617";
 const BASE_URL = "https://www.omdbapi.com/";
 let query = "";
 let page = 1;
 let isLoading = false;
 
 document.querySelector("#q_field").addEventListener("input", () => {
-    page = 1; // हर नए सर्च के साथ पेज नंबर रीसेट करें
+    page = 1;
 });
 
 function search() {
@@ -18,8 +18,8 @@ function search() {
     }
 
     results_list.innerHTML = "<p class='text-center text-warning'><span class='spinner'></span> Searching...</p>";
-    page = 1; // नई सर्च के लिए पेज नंबर रीसेट करें
-    results_list.innerHTML = ""; // पहले से मौजूद परिणाम हटाएँ
+    page = 1; 
+    results_list.innerHTML = "";
 
     fetchMovies();
 }
@@ -33,7 +33,7 @@ function fetchMovies() {
         .then(results => {  
             if (results.Response === "True") {  
                 results.Search.forEach(item => add_result(item));
-                page++; // अगले पेज के लिए इनक्रीमेंट करें
+                page++;
                 isLoading = false;
             } else {  
                 if (page === 1) {
@@ -81,6 +81,6 @@ function add_result(item) {
 // **Infinite Scroll Listener**
 window.addEventListener("scroll", () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-        fetchMovies(); // नए डेटा को लोड करें जब यूज़र नीचे स्क्रॉल करे
+        fetchMovies(); 
     }
 });
