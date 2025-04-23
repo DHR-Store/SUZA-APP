@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SUZA Movie Stream</title>
+  <title>SUZA Universal Stream</title>
   <style>
     * {
       margin: 0;
@@ -24,11 +24,11 @@
   <iframe id="movieFrame" sandbox="allow-same-origin allow-scripts" src=""></iframe>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const movieName = params.get("movie");
+    const path = window.location.pathname;
+    const contentName = decodeURIComponent(path.replace(/^\/=*/, "").replace(/\+/g, " ").trim());
 
-    if (movieName) {
-      const iframeLink = `https://player4u.xyz/embed?key=${encodeURIComponent(movieName)}`;
+    if (contentName) {
+      const iframeLink = `https://player4u.xyz/embed?key=${encodeURIComponent(contentName)}`;
       const iframe = document.getElementById("movieFrame");
       iframe.src = iframeLink;
 
@@ -37,10 +37,10 @@
         iframe.removeAttribute("sandbox");
       }, 4000);
     } else {
-      document.body.innerHTML = "<h2 style='color:white;text-align:center;padding-top: 20%;'>Movie name not found in URL</h2>";
+      document.body.innerHTML = "<h2 style='color:white;text-align:center;padding-top: 20%;'>Content not found in URL</h2>";
     }
 
-    // Block any links from being opened in parent window
+    // Prevent external navigation from iframe
     window.addEventListener('message', (event) => {
       if (event.origin !== "https://player4u.xyz") return;
       if (typeof event.data === "string" && event.data.includes("navigate")) {
