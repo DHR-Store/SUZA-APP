@@ -2,36 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Suza Movie Stream</title>
+  <title>SUZA Movie Stream</title>
   <style>
-    body {
-      background-color: #000;
+    * {
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
-    iframe {
-      width: 90%;
-      height: 90vh;
+    html, body {
+      height: 100%;
+      background-color: #000;
+      overflow: hidden;
+    }
+    #movieFrame {
+      width: 100%;
+      height: 100%;
       border: none;
     }
   </style>
 </head>
 <body>
-  <iframe id="movieFrame" src=""></iframe>
+  <iframe id="movieFrame" sandbox="allow-same-origin allow-scripts" src=""></iframe>
 
   <script>
     const params = new URLSearchParams(window.location.search);
     const movieName = params.get("movie");
+
     if (movieName) {
       const iframeLink = `https://player4u.xyz/embed?key=${encodeURIComponent(movieName)}`;
-      document.getElementById("movieFrame").src = iframeLink;
+      const iframe = document.getElementById("movieFrame");
+      iframe.src = iframeLink;
+
+      // Remove sandbox after 4 seconds
+      setTimeout(() => {
+        iframe.removeAttribute("sandbox");
+      }, 4000);
     } else {
-      document.body.innerHTML = "<h2 style='color:white;text-align:center;'>Movie name not found in URL</h2>";
+      document.body.innerHTML = "<h2 style='color:white;text-align:center;padding-top: 20%;'>Movie name not found in URL</h2>";
     }
+
+    // Block any links from being opened in parent window
+    window.addEventListener('message', (event) => {
+      if (event.origin !== "https://player4u.xyz") return;
+      if (typeof event.data === "string" && event.data.includes("navigate")) {
+        event.stopPropagation();
+      }
+    }, true);
   </script>
 </body>
 </html>
