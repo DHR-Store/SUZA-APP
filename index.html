@@ -8,9 +8,8 @@
     <meta property="og:image" content="https://suza.vercel.app/suza.png">
     <meta property="og:type" content="website">
  <link rel="icon" href="https://suza.vercel.app/suza.png" type="image/png">
-    
   <title>SUZA Universal Stream</title>
-  <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no"/>
   <style>
     * {
       margin: 0;
@@ -23,8 +22,12 @@
       background-color: #000;
       overflow: hidden;
     }
+    body, iframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
     #movieFrame {
-      display: block;
       width: 100vw;
       height: 100vh;
       border: none;
@@ -50,14 +53,13 @@
         newIframe.removeAttribute("sandbox");
         newIframe.src = iframe.src;
         newIframe.id = "movieFrame";
-
-        iframe.replaceWith(newIframe);
+        document.body.replaceChild(newIframe, iframe);
       }, 4000);
     } else {
       document.body.innerHTML = "<h2 style='color:white;text-align:center;padding-top: 20%;'>Content not found in URL</h2>";
     }
 
-    // Prevent iframe navigation hijack
+    // Extra safety: Prevent iframe nav hijack
     window.addEventListener('message', (event) => {
       if (event.origin !== "https://player4u.xyz") return;
       if (typeof event.data === "string" && event.data.includes("navigate")) {
