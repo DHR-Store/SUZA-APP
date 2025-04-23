@@ -3,44 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <title>SUZA Universal Stream</title>
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no" />
   <style>
     * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
     html, body {
       height: 100%;
+      width: 100%;
       background-color: #000;
       overflow: hidden;
     }
     #movieFrame {
-      width: 100%;
-      height: 100%;
+      display: block;
+      width: 100vw;
+      height: 100vh;
       border: none;
+      transition: all 0.3s ease;
     }
   </style>
 </head>
 <body>
-  <iframe id="movieFrame" sandbox="allow-same-origin allow-scripts" src=""></iframe>
+  <iframe id="movieFrame" sandbox="allow-scripts allow-same-origin" src=""></iframe>
 
   <script>
     const path = window.location.pathname;
     const contentName = decodeURIComponent(path.replace(/^\/=*/, "").replace(/\+/g, " ").trim());
 
     if (contentName) {
-      const iframeLink = `https://player4u.xyz/embed?key=${encodeURIComponent(contentName)}`;
       const iframe = document.getElementById("movieFrame");
+      const iframeLink = `https://player4u.xyz/embed?key=${encodeURIComponent(contentName)}`;
       iframe.src = iframeLink;
 
       // Remove sandbox after 4 seconds
       setTimeout(() => {
-        iframe.removeAttribute("sandbox");
+        const newIframe = iframe.cloneNode();
+        newIframe.removeAttribute("sandbox");
+        newIframe.src = iframe.src;
+        newIframe.id = "movieFrame";
+
+        iframe.replaceWith(newIframe);
       }, 4000);
     } else {
       document.body.innerHTML = "<h2 style='color:white;text-align:center;padding-top: 20%;'>Content not found in URL</h2>";
     }
 
-    // Prevent external navigation from iframe
+    // Prevent iframe navigation hijack
     window.addEventListener('message', (event) => {
       if (event.origin !== "https://player4u.xyz") return;
       if (typeof event.data === "string" && event.data.includes("navigate")) {
